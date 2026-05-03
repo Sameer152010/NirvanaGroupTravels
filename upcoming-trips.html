@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upcoming Trips — Nirvana Group Travels</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sand: #F5EFE0; --sand-dark: #E8DCBF; --ink: #1A1610; --ink-soft: #4A4030;
+      --gold: #C4973A; --gold-light: #E8C068; --white: #FDFAF4; --text-muted: #6B5E44;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(253,250,244,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196,151,58,0.15);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600;
+      letter-spacing: 0.04em; color: var(--ink); text-decoration: none;
+    }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--ink-soft); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a.active { color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
+    .nav-cta { background: var(--gold); color: var(--white) !important; padding: 0.5rem 1.25rem; border-radius: 2px; border-bottom: none !important; }
+    .nav-cta:hover { background: var(--ink) !important; color: var(--white) !important; }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 9rem 2rem 4rem; text-align: center;
+      background: linear-gradient(to bottom, var(--sand) 0%, var(--white) 100%);
+    }
+    .page-tag { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1rem; }
+    .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem,6vw,5rem); font-weight: 300; color: var(--ink); }
+    .page-title em { font-style: italic; color: var(--gold); }
+    .page-subtitle { font-size: 1rem; color: var(--text-muted); margin-top: 1rem; line-height: 1.7; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+    /* TRIP ENTRIES */
+    .trips-list { max-width: 960px; margin: 0 auto; padding: 4rem 2rem 6rem; display: flex; flex-direction: column; gap: 5rem; }
+
+    .trip-entry { display: grid; grid-template-columns: 400px 1fr; gap: 3rem; align-items: start; }
+    .trip-entry:nth-child(even) { direction: rtl; }
+    .trip-entry:nth-child(even) > * { direction: ltr; }
+
+    .trip-image-wrap { position: relative; border-radius: 4px; overflow: hidden; aspect-ratio: 4/3; flex-shrink: 0; }
+    .trip-image-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .trip-badge {
+      position: absolute; top: 1.25rem; left: 1.25rem;
+      background: var(--gold); color: var(--white);
+      font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.35rem 0.85rem; border-radius: 2px;
+    }
+    .trip-badge.tbd { background: var(--ink-soft); }
+
+    .trip-content { padding-top: 0.5rem; }
+    .trip-dates { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+    .trip-title { font-family: 'Cormorant Garamond', serif; font-size: 2.25rem; font-weight: 300; line-height: 1.15; margin-bottom: 1.5rem; }
+    .trip-title em { font-style: italic; color: var(--gold); }
+
+    .trip-body { font-size: 0.925rem; color: var(--ink-soft); line-height: 1.85; }
+    .trip-body p { margin-bottom: 1rem; }
+    .trip-body p:last-child { margin-bottom: 0; }
+    .trip-body strong { color: var(--ink); font-weight: 500; }
+
+    .trip-highlights { margin: 1.25rem 0; padding: 1.25rem 1.5rem; background: var(--sand); border-radius: 4px; border-left: 3px solid var(--gold); }
+    .trip-highlights p { font-size: 0.85rem; font-weight: 500; color: var(--ink); margin-bottom: 0.6rem; letter-spacing: 0.05em; }
+    .trip-highlights ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+    .trip-highlights ul li { font-size: 0.875rem; color: var(--ink-soft); padding-left: 1rem; position: relative; }
+    .trip-highlights ul li::before { content: '→'; position: absolute; left: 0; color: var(--gold); font-size: 0.75rem; top: 2px; }
+
+    .trip-pricing { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .price-pill {
+      background: var(--ink); color: var(--white);
+      font-size: 0.78rem; font-weight: 400; padding: 0.5rem 1rem;
+      border-radius: 2px; line-height: 1.4;
+    }
+    .price-pill span { color: var(--gold-light); font-weight: 500; }
+
+    .trip-divider { border: none; border-top: 1px solid var(--sand-dark); }
+
+    /* Day-by-day itinerary style for Istanbul */
+    .day-block { margin-bottom: 1.5rem; }
+    .day-block:last-child { margin-bottom: 0; }
+    .day-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .day-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 0.6rem; color: var(--ink); }
+    .day-body { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.8; }
+
+    /* Vietnam coming-soon */
+    .coming-soon-box {
+      background: var(--sand); border-radius: 4px; padding: 2.5rem;
+      border: 1px dashed var(--sand-dark); text-align: center;
+    }
+    .coming-soon-box p { font-size: 1rem; color: var(--text-muted); line-height: 1.7; font-style: italic; }
+
+    /* CTA strip */
+    .page-cta {
+      background: var(--ink); text-align: center; padding: 5rem 2rem;
+    }
+    .page-cta h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--white); margin-bottom: 1rem; }
+    .page-cta h2 em { font-style: italic; color: var(--gold-light); }
+    .page-cta p { color: rgba(255,255,255,0.65); margin-bottom: 2rem; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+    .btn-primary { background: var(--gold); color: var(--white); padding: 0.85rem 2.5rem; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
+    .btn-primary:hover { background: var(--white); color: var(--ink); }
+
+    footer { background: var(--ink); color: rgba(255,255,255,0.5); padding: 3rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.06); }
+    footer a { color: var(--gold-light); text-decoration: none; }
+
+    @media (max-width: 860px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+      .trip-entry { grid-template-columns: 1fr; }
+      .trip-entry:nth-child(even) { direction: ltr; }
+      .trips-list { padding: 3rem 1.25rem 4rem; gap: 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <!-- LOGO: Replace with: <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Nirvana Group Travels" /></a> -->
+    <a href="index.html" class="nav-logo">Nirvana Group <span>Travels</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="previous-trips.html">Previous Trips</a></li>
+      <li><a href="upcoming-trips.html" class="active">Upcoming Trips</a></li>
+      <li><a href="reviews.html">Reviews</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <span class="page-tag">Nirvana Group Travels · 2025</span>
+    <h1 class="page-title"><em>Upcoming</em> Trips</h1>
+    <p class="page-subtitle">Four extraordinary destinations. One unforgettable year. Join us.</p>
+  </div>
+
+  <div class="trips-list">
+
+    <!-- ========== GREECE ========== -->
+    <div class="trip-entry" id="greece">
+      <div class="trip-image-wrap">
+        <img src="https://images.unsplash.com/photo-1571406384080-3c10db5b7f31?w=800&q=80" alt="Greece 7-Island Cruise" />
+        <span class="trip-badge">June 25 – July 5</span>
+      </div>
+      <div class="trip-content">
+        <p class="trip-dates">June 25 – July 5, 2025 · 10 Days</p>
+        <h2 class="trip-title">Greece — <em>7-Island Cruise</em></h2>
+        <div class="trip-body">
+          <p>Get ready for an unforgettable Mediterranean journey as we set off on a 10-day adventure through the heart of Greece and beyond.</p>
+          <p>Our experience begins with a breathtaking day trip to Meteora — a UNESCO World Heritage site where centuries-old monasteries sit dramatically atop towering rock formations.</p>
+          <p>From there, we embark on an enchanting 7-night, 7-island cruise starting and ending in Athens, blending iconic destinations with immersive cultural experiences. This thoughtfully curated itinerary gives us a full day on each stop, allowing us to truly soak in the beauty, history, and charm of every location.</p>
+
+          <div class="trip-highlights">
+            <p>Destinations include:</p>
+            <ul>
+              <li>The whitewashed magic of Santorini</li>
+              <li>The vibrant energy of Mykonos</li>
+              <li>The rich heritage of Heraklion in Crete</li>
+              <li>The hidden gem allure of Milos</li>
+              <li>The medieval charm of Rhodes</li>
+              <li>A cultural stop in Kusadasi, Turkey</li>
+            </ul>
+          </div>
+
+          <p>With a group of 56 travelers already joining through Nirvana Travels, this journey promises not just stunning destinations, but a vibrant community of explorers to share it with.</p>
+          <p>From ancient history to sun-soaked beaches and unforgettable sunsets — this is Greece the way it's meant to be experienced.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="trip-divider" />
+
+    <!-- ========== ISTANBUL ========== -->
+    <div class="trip-entry" id="istanbul">
+      <div class="trip-image-wrap">
+        <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&q=80" alt="Istanbul, Turkey" />
+        <span class="trip-badge">July 5 – 7</span>
+      </div>
+      <div class="trip-content">
+        <p class="trip-dates">July 5 – 7, 2025 · 3 Days</p>
+        <h2 class="trip-title">Istanbul, <em>Turkey</em></h2>
+        <div class="trip-body">
+
+          <div class="day-block">
+            <p class="day-label">Day 1</p>
+            <p class="day-title">Arrival & Taksim Exploration</p>
+            <p class="day-body">Welcome to Turkey! Upon arrival at Istanbul Airport at 12:00 PM, our representative will greet you with a personalized name sign and assist you with a private transfer to your hotel.</p>
+            <p class="day-body">In the evening, meet at 5:00 PM in front of Moxy Istanbul Taksim for a guided walking tour through the lively heart of the city. Explore the iconic Taksim Square and stroll along Istiklal Street, known for its vibrant atmosphere, historic architecture, and bustling shops. After the tour, enjoy free time to explore at your own pace.</p>
+          </div>
+
+          <div class="day-block">
+            <p class="day-label">Day 2</p>
+            <p class="day-title">Historic Istanbul Tour</p>
+            <p class="day-body">After breakfast, depart at 8:30 AM for a full-day guided exploration of Istanbul — the only city in the world spanning two continents, known through history as Byzantium and Constantinople.</p>
+            <div class="trip-highlights">
+              <p>Highlights of the day:</p>
+              <ul>
+                <li>Topkapi Palace — once the residence of Ottoman sultans</li>
+                <li>Hagia Sophia — a masterpiece of Byzantine architecture</li>
+                <li>Blue Mosque — famous for its stunning blue tiles</li>
+                <li>Hippodrome of Constantinople — site of historic races and political events</li>
+                <li>Grand Bazaar — one of the world's oldest and largest covered markets</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="day-block">
+            <p class="day-label">Day 3</p>
+            <p class="day-title">Bosphorus Cruise & Departure</p>
+            <p class="day-body">After breakfast, check out and depart at 10:30 AM for your final day. Begin with a visit to the aromatic Spice Bazaar, then enjoy a scenic Bosphorus Strait cruise — an unforgettable boat journey between Europe and Asia, with views of waterfront palaces, historic fortresses, and picturesque fishing villages. Private transfer to the airport for your departure flight at 6:50 PM.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <hr class="trip-divider" />
+
+    <!-- ========== PUNTA CANA ========== -->
+    <div class="trip-entry" id="punta-cana">
+      <div class="trip-image-wrap">
+        <img src="https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=800&q=80" alt="Punta Cana" />
+        <span class="trip-badge tbd">September 2025 · TBD</span>
+      </div>
+      <div class="trip-content">
+        <p class="trip-dates">September 2025 · Date to be confirmed</p>
+        <h2 class="trip-title">Punta Cana, <em>Dominican Republic</em></h2>
+        <div class="trip-body">
+          <p>Our annual escape to Punta Cana is the perfect blend of relaxation, recreation, and unforgettable nightlife — designed for every kind of traveler.</p>
+          <p>Whether you're teeing off on some of the world's most scenic championship golf courses, unwinding on pristine white-sand beaches, or sipping tropical cocktails under the Caribbean sun, this experience delivers it all.</p>
+
+          <div class="trip-highlights">
+            <p>What makes this trip special:</p>
+            <ul>
+              <li><strong>Golf Enthusiasts:</strong> World-class courses with breathtaking ocean views</li>
+              <li><strong>Beach Lovers:</strong> Endless sun, turquoise waters, and pure relaxation</li>
+              <li><strong>Party Seekers:</strong> Two exclusive Ibiza-inspired parties — all included</li>
+              <li><strong>Resort:</strong> Premium all-inclusive with 8 on-site restaurants & beachfront luxury</li>
+            </ul>
+          </div>
+
+          <p>Carefully curated by Nirvana Travels, this is more than just a vacation — it's a yearly tradition you won't want to miss.</p>
+
+          <div class="trip-pricing">
+            <div class="price-pill">Double occupancy: <span>under $400/person</span></div>
+            <div class="price-pill">Premium double occupancy: <span>under $700/person</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="trip-divider" />
+
+    <!-- ========== VIETNAM ========== -->
+    <div class="trip-entry" id="vietnam">
+      <div class="trip-image-wrap">
+        <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80" alt="Vietnam" />
+        <span class="trip-badge tbd">November 2025 · TBD</span>
+      </div>
+      <div class="trip-content">
+        <p class="trip-dates">November 2025 · Date to be confirmed</p>
+        <h2 class="trip-title"><em>Vietnam</em></h2>
+        <div class="coming-soon-box">
+          <p>Under Planning.... coming soon in a week. Get your travel calendars organized.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-cta">
+    <h2>Ready to <em>join us?</em></h2>
+    <p>Spots fill up fast. Reach out today to secure your place on any of our upcoming trips.</p>
+    <a href="contact.html" class="btn-primary">Contact Us</a>
+  </div>
+
+  <footer>
+    <p>© 2025 Nirvana Group Travels · <a href="index.html">Back to Home</a></p>
+  </footer>
+
+</body>
+</html>

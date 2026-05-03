@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nirvana Group Travels — Extraordinary Journeys</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sand: #F5EFE0; --sand-dark: #E8DCBF; --ink: #1A1610; --ink-soft: #4A4030;
+      --gold: #C4973A; --gold-light: #E8C068; --white: #FDFAF4; --text-muted: #6B5E44;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(253,250,244,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196,151,58,0.15);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600;
+      letter-spacing: 0.04em; color: var(--ink); text-decoration: none;
+    }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--ink-soft); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a.active { color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
+    .nav-cta { background: var(--gold); color: var(--white) !important; padding: 0.5rem 1.25rem; border-radius: 2px; border-bottom: none !important; }
+    .nav-cta:hover { background: var(--ink) !important; color: var(--white) !important; }
+
+    #hero {
+      height: 100vh; min-height: 640px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      background:
+        linear-gradient(to bottom, rgba(26,22,16,0.45) 0%, rgba(26,22,16,0.2) 60%, rgba(26,22,16,0.6) 100%),
+        url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1800&q=80') center/cover no-repeat;
+      padding: 2rem;
+    }
+    .hero-eyebrow { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1.5rem; }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem,8vw,6.5rem); font-weight: 300; line-height: 1.05; color: var(--white); margin-bottom: 1.5rem; max-width: 800px; }
+    .hero-title em { font-style: italic; color: var(--gold-light); }
+    .hero-subtitle { font-size: 1rem; font-weight: 300; color: rgba(253,250,244,0.8); max-width: 480px; line-height: 1.7; margin-bottom: 2.5rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn-primary { background: var(--gold); color: var(--white); padding: 0.85rem 2.5rem; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
+    .btn-primary:hover { background: var(--white); color: var(--ink); }
+    .btn-outline { border: 1px solid rgba(253,250,244,0.6); color: var(--white); padding: 0.85rem 2.5rem; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
+    .btn-outline:hover { background: rgba(253,250,244,0.1); }
+
+    section { padding: 6rem 2rem; }
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-tag { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1rem; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,4vw,3.25rem); font-weight: 300; line-height: 1.15; color: var(--ink); }
+    .section-title em { font-style: italic; color: var(--gold); }
+
+    #destinations { background: var(--white); }
+    .destinations-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .dest-card { position: relative; overflow: hidden; border-radius: 4px; cursor: pointer; aspect-ratio: 4/3; text-decoration: none; display: block; }
+    .dest-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .dest-card:hover img { transform: scale(1.06); }
+    .dest-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,22,16,0.88) 0%, transparent 60%);
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;
+    }
+    .dest-dates { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 0.4rem; }
+    .dest-name { font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 400; color: var(--white); margin-bottom: 0.4rem; }
+    .dest-sub { font-size: 0.8rem; color: rgba(253,250,244,0.7); margin-bottom: 0.75rem; }
+    .dest-link { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-light); }
+
+    #why { background: var(--ink); color: var(--white); text-align: center; }
+    #why .section-title { color: var(--white); }
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+    .why-item { padding: 2rem 1.5rem; border: 1px solid rgba(196,151,58,0.2); border-radius: 4px; }
+    .why-icon { font-size: 2rem; margin-bottom: 1rem; display: block; color: var(--gold-light); }
+    .why-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; margin-bottom: 0.75rem; color: var(--white); }
+    .why-text { font-size: 0.875rem; color: rgba(255,255,255,0.6); line-height: 1.7; }
+
+    #reviews { background: var(--white); }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .review-card { background: var(--sand); padding: 2rem; border-radius: 4px; position: relative; }
+    .review-quote { font-family: 'Cormorant Garamond', serif; font-size: 4rem; line-height: 1; color: var(--gold); position: absolute; top: 1rem; right: 1.5rem; opacity: 0.4; }
+    .review-text { font-size: 0.95rem; line-height: 1.75; color: var(--ink-soft); margin-bottom: 1.5rem; font-style: italic; }
+    .review-author { display: flex; align-items: center; gap: 1rem; }
+    .review-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 0.875rem; color: var(--white); flex-shrink: 0; }
+    .review-name { font-weight: 500; font-size: 0.9rem; }
+    .review-trip { font-size: 0.75rem; color: var(--text-muted); }
+    .stars { color: var(--gold); font-size: 0.75rem; letter-spacing: 0.1em; }
+
+    #cta {
+      background: linear-gradient(to right, rgba(26,22,16,0.88), rgba(26,22,16,0.6)),
+        url('https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=1600&q=80') center/cover no-repeat;
+      text-align: center; padding: 8rem 2rem;
+    }
+    #cta .section-title { color: var(--white); }
+    #cta p { color: rgba(253,250,244,0.75); max-width: 500px; margin: 1.5rem auto 2.5rem; line-height: 1.7; }
+
+    footer { background: var(--ink); color: rgba(255,255,255,0.5); padding: 4rem 3rem 2rem; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-brand .nav-logo { display: flex; margin-bottom: 1rem; }
+    .footer-desc { font-size: 0.85rem; line-height: 1.7; max-width: 260px; }
+    .footer-heading { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); margin-bottom: 1.25rem; font-weight: 500; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a { font-size: 0.875rem; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold-light); }
+    .footer-bottom { max-width: 1100px; margin: 2rem auto 0; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; flex-wrap: wrap; gap: 1rem; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+      section { padding: 4rem 1.25rem; }
+      .destinations-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <!-- LOGO: Replace with: <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Nirvana Group Travels" /></a> -->
+    <a href="index.html" class="nav-logo">Nirvana Group <span>Travels</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="previous-trips.html">Previous Trips</a></li>
+      <li><a href="upcoming-trips.html">Upcoming Trips</a></li>
+      <li><a href="reviews.html">Reviews</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <p class="hero-eyebrow">Est. 2023 · Boutique Travel Specialists</p>
+    <h1 class="hero-title">The world is <em>waiting</em> for you</h1>
+    <p class="hero-subtitle">Curated journeys to the planet's most extraordinary places. Every detail handled. Every moment unforgettable.</p>
+    <div class="hero-btns">
+      <a href="upcoming-trips.html" class="btn-primary">Explore Trips</a>
+      <a href="#destinations" class="btn-outline">View Destinations</a>
+    </div>
+  </section>
+
+  <section id="destinations">
+    <div class="section-header">
+      <span class="section-tag">2025 Upcoming Trips</span>
+      <h2 class="section-title">Where we're going <em>next</em></h2>
+    </div>
+    <div class="destinations-grid">
+
+      <a href="upcoming-trips.html#greece" class="dest-card">
+        <img src="https://images.unsplash.com/photo-1571406384080-3c10db5b7f31?w=800&q=80" alt="Greece 7-Island Cruise" />
+        <div class="dest-overlay">
+          <p class="dest-dates">June 25 – July 5, 2025</p>
+          <h3 class="dest-name">Greece — 7-Island Cruise</h3>
+          <p class="dest-sub">10 days · Santorini, Mykonos, Crete, Milos, Rhodes & more</p>
+          <span class="dest-link">View details →</span>
+        </div>
+      </a>
+
+      <a href="upcoming-trips.html#istanbul" class="dest-card">
+        <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&q=80" alt="Istanbul, Turkey" />
+        <div class="dest-overlay">
+          <p class="dest-dates">July 5 – 7, 2025</p>
+          <h3 class="dest-name">Istanbul, Turkey</h3>
+          <p class="dest-sub">3 days · Bosphorus cruise, Grand Bazaar & historic sites</p>
+          <span class="dest-link">View details →</span>
+        </div>
+      </a>
+
+      <a href="upcoming-trips.html#punta-cana" class="dest-card">
+        <img src="https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=800&q=80" alt="Punta Cana" />
+        <div class="dest-overlay">
+          <p class="dest-dates">September 2025 · Date TBD</p>
+          <h3 class="dest-name">Punta Cana, Dominican Republic</h3>
+          <p class="dest-sub">All-inclusive resort · Golf, beach & Ibiza-style parties</p>
+          <span class="dest-link">View details →</span>
+        </div>
+      </a>
+
+      <a href="upcoming-trips.html#vietnam" class="dest-card">
+        <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80" alt="Vietnam" />
+        <div class="dest-overlay">
+          <p class="dest-dates">November 2025 · Date TBD</p>
+          <h3 class="dest-name">Vietnam</h3>
+          <p class="dest-sub">Itinerary under planning — details coming soon</p>
+          <span class="dest-link">View details →</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="section-header">
+      <span class="section-tag">Why travel with us</span>
+      <h2 class="section-title">The <em>Nirvana</em> difference</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <span class="why-icon">✦</span>
+        <h3 class="why-title">Bespoke Itineraries</h3>
+        <p class="why-text">Every trip is tailored to you — no cookie-cutter packages, no rushed buses. Your pace, your interests, your journey.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">◈</span>
+        <h3 class="why-title">Expert Local Guides</h3>
+        <p class="why-text">Our on-the-ground network of local specialists unlock experiences most travellers never find.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">◇</span>
+        <h3 class="why-title">24/7 Support</h3>
+        <p class="why-text">A real person, always on call. Whatever happens, wherever you are, we've got you covered.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">⬡</span>
+        <h3 class="why-title">Sustainable Travel</h3>
+        <p class="why-text">We partner with eco-conscious operators and offset every journey. See the world, protect it too.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <div class="section-header">
+      <span class="section-tag">What our travellers say</span>
+      <h2 class="section-title">Stories from the <em>road</em></h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">Nirvana Group Travels turned what I thought would be a complicated trip into the most seamless, magical two weeks of my life. Every single detail was perfect.</p>
+        <div class="review-author">
+          <div class="review-avatar">SR</div>
+          <div><p class="review-name">Sarah R.</p><p class="review-trip">Japan Cherry Blossom Tour</p><p class="stars">★★★★★</p></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">The Kenya safari exceeded every expectation. Watching the great migration at dawn with our guide — an experience I'll carry with me forever.</p>
+        <div class="review-author">
+          <div class="review-avatar">MK</div>
+          <div><p class="review-name">Marcus K.</p><p class="review-trip">Kenya Safari & Coast</p><p class="stars">★★★★★</p></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-text">I've travelled with many agencies and Nirvana is simply in a different league. The attention to detail, the warmth of the team — truly exceptional.</p>
+        <div class="review-author">
+          <div class="review-avatar">LB</div>
+          <div><p class="review-name">Lucia B.</p><p class="review-trip">Patagonia W-Trek</p><p class="stars">★★★★★</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cta">
+    <span class="section-tag">Begin your journey</span>
+    <h2 class="section-title">Ready to go <em>somewhere</em> extraordinary?</h2>
+    <p>Tell us your dream destination and we'll craft a journey built entirely around you.</p>
+    <a href="contact.html" class="btn-primary">Start Planning Today</a>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">Nirvana Group <span>Travels</span></a>
+        <p class="footer-desc">Boutique travel specialists crafting extraordinary journeys since 2023. Every trip, a story worth telling.</p>
+      </div>
+      <div>
+        <p class="footer-heading">Explore</p>
+        <ul class="footer-links">
+          <li><a href="previous-trips.html">Previous Trips</a></li>
+          <li><a href="upcoming-trips.html">Upcoming Trips</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-heading">Company</p>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-heading">Contact</p>
+        <ul class="footer-links">
+          <li><a href="mailto:hello@nirvanagrouptravels.com">hello@nirvanagrouptravels.com</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Nirvana Group Travels. All rights reserved.</p>
+      <p><a href="#" style="color:rgba(255,255,255,0.4);text-decoration:none;">Privacy Policy</a> · <a href="#" style="color:rgba(255,255,255,0.4);text-decoration:none;">Terms</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>

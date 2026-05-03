@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Previous Trips — Nirvana Group Travels</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sand: #F5EFE0; --sand-dark: #E8DCBF; --ink: #1A1610; --ink-soft: #4A4030;
+      --gold: #C4973A; --gold-light: #E8C068; --white: #FDFAF4; --text-muted: #6B5E44;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); overflow-x: hidden; }
+
+    /* ---- NAV ---- */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(253,250,244,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196,151,58,0.15);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600;
+      letter-spacing: 0.04em; color: var(--ink); text-decoration: none;
+    }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--ink-soft); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a.active { color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
+    .nav-cta { background: var(--gold); color: var(--white) !important; padding: 0.5rem 1.25rem; border-radius: 2px; border-bottom: none !important; }
+    .nav-cta:hover { background: var(--ink) !important; color: var(--white) !important; }
+
+    /* ---- PAGE HERO ---- */
+    .page-hero {
+      padding: 9rem 2rem 4rem; text-align: center;
+      background: linear-gradient(to bottom, var(--sand) 0%, var(--white) 100%);
+    }
+    .page-tag { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1rem; }
+    .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem,6vw,5rem); font-weight: 300; color: var(--ink); }
+    .page-title em { font-style: italic; color: var(--gold); }
+    .page-subtitle { font-size: 1rem; color: var(--text-muted); margin-top: 1rem; line-height: 1.7; max-width: 540px; margin-left: auto; margin-right: auto; }
+
+    /* ---- UPLOAD NOTICE BANNER ---- */
+    .upload-notice {
+      max-width: 860px; margin: 0 auto 1rem;
+      background: var(--sand); border-radius: 4px;
+      border-left: 3px solid var(--gold);
+      padding: 1rem 1.5rem;
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .upload-notice-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .upload-notice p { font-size: 0.875rem; color: var(--ink-soft); line-height: 1.6; }
+    .upload-notice strong { color: var(--ink); }
+
+    /* ---- YEAR SECTIONS ---- */
+    .albums-wrap { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+
+    .year-group { margin-bottom: 4rem; }
+    .year-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 300; color: var(--ink);
+      border-bottom: 1px solid var(--sand-dark);
+      padding-bottom: 0.75rem; margin-bottom: 2rem;
+    }
+    .year-label em { font-style: italic; color: var(--gold); }
+
+    /* ---- ALBUM CARDS ---- */
+    .albums-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .album-card {
+      background: var(--white);
+      border: 1px solid var(--sand-dark);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .album-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(26,22,16,0.1); }
+
+    .album-thumb {
+      position: relative;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      background: var(--sand);
+    }
+    .album-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .album-card:hover .album-thumb img { transform: scale(1.05); }
+
+    /* Colourful overlay per destination */
+    .album-thumb::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,22,16,0.55) 0%, transparent 60%);
+    }
+    .album-thumb-label {
+      position: absolute; bottom: 0.9rem; left: 1rem; z-index: 1;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem; font-weight: 400; color: var(--white);
+      line-height: 1.1;
+    }
+    .album-thumb-label span { display: block; font-family: 'DM Sans', sans-serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 0.25rem; }
+
+    .album-body { padding: 1.1rem 1.25rem 1.25rem; }
+    .album-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.1rem; }
+
+    .album-actions { display: flex; gap: 0.65rem; }
+    .btn-view {
+      flex: 1; text-align: center;
+      background: var(--ink); color: var(--white);
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.6rem 0.75rem; border-radius: 2px; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-view:hover { background: var(--gold); }
+    .btn-add {
+      flex: 1; text-align: center;
+      background: transparent; color: var(--gold);
+      border: 1px solid var(--gold);
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.6rem 0.75rem; border-radius: 2px; text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-add:hover { background: var(--gold); color: var(--white); }
+
+    /* ---- FOOTER ---- */
+    footer { background: var(--ink); color: rgba(255,255,255,0.5); padding: 3rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.06); }
+    footer a { color: var(--gold-light); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+      .albums-wrap { padding: 2rem 1.25rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <!-- LOGO: Replace with: <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Nirvana Group Travels" /></a> -->
+    <a href="index.html" class="nav-logo">Nirvana Group <span>Travels</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="previous-trips.html" class="active">Previous Trips</a></li>
+      <li><a href="upcoming-trips.html">Upcoming Trips</a></li>
+      <li><a href="reviews.html">Reviews</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <span class="page-tag">Memories from the road</span>
+    <h1 class="page-title"><em>Previous</em> Trips</h1>
+    <p class="page-subtitle">Every journey leaves a story. Browse our photo albums — and add your own shots from trips you were part of.</p>
+  </div>
+
+  <div class="albums-wrap">
+
+    <div class="upload-notice">
+      <span class="upload-notice-icon">📷</span>
+      <p><strong>Were you on one of these trips?</strong> Click "Add Your Photos" on any album to contribute your own pictures. All you need is a Google account — your photos will appear in the shared album for everyone to enjoy.</p>
+    </div>
+
+    <!-- ======== 2026 ======== -->
+    <div class="year-group">
+      <h2 class="year-label"><em>2026</em></h2>
+      <div class="albums-grid">
+
+        <div class="album-card">
+          <div class="album-thumb">
+            <!-- Replace src with a real cover photo when available -->
+            <img src="https://images.unsplash.com/photo-1552074284-5e88ef1aef18?w=600&q=80" alt="Cancun 2026" />
+            <div class="album-thumb-label">
+              <span>January 2026</span>
+              Cancun, Mexico
+            </div>
+          </div>
+          <div class="album-body">
+            <p class="album-desc">Sun, turquoise waters, and the energy of the Caribbean. Our first adventure of 2026.</p>
+            <div class="album-actions">
+              <a href="https://photos.app.goo.gl/LpmAQGnwMvwzmtxBA" target="_blank" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/LpmAQGnwMvwzmtxBA" target="_blank" class="btn-add">+ Add Photos</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ======== 2025 ======== -->
+    <div class="year-group">
+      <h2 class="year-label"><em>2025</em></h2>
+      <div class="albums-grid">
+
+        <div class="album-card">
+          <div class="album-thumb">
+            <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80" alt="Turkey 2025" />
+            <div class="album-thumb-label">
+              <span>2025</span>
+              Turkey
+            </div>
+          </div>
+          <div class="album-body">
+            <p class="album-desc">Istanbul's grand bazaars, the Bosphorus at golden hour, and the timeless beauty of Cappadocia.</p>
+            <div class="album-actions">
+              <a href="https://photos.app.goo.gl/erTSqVdKc7J5iZXD7" target="_blank" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/erTSqVdKc7J5iZXD7" target="_blank" class="btn-add">+ Add Photos</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="album-card">
+          <div class="album-thumb">
+            <img src="https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=600&q=80" alt="Punta Cana 2025" />
+            <div class="album-thumb-label">
+              <span>2025</span>
+              Punta Cana, Dominican Republic
+            </div>
+          </div>
+          <div class="album-body">
+            <p class="album-desc">White sand beaches, all-inclusive luxury, and Ibiza-style parties under the Caribbean sky.</p>
+            <div class="album-actions">
+              <a href="https://photos.app.goo.gl/SfdCwzVZsgum8FSQ6" target="_blank" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/SfdCwzVZsgum8FSQ6" target="_blank" class="btn-add">+ Add Photos</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="album-card">
+          <div class="album-thumb">
+            <img src="https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=600&q=80" alt="Chile 2025" />
+            <div class="album-thumb-label">
+              <span>2025</span>
+              Chile
+            </div>
+          </div>
+          <div class="album-body">
+            <p class="album-desc">The raw drama of Patagonia — glaciers, mountains, and the wild windswept landscapes of the south.</p>
+            <div class="album-actions">
+              <a href="https://photos.app.goo.gl/nEUikW1qcJVT3nV96" target="_blank" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/nEUikW1qcJVT3nV96" target="_blank" class="btn-add">+ Add Photos</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ======== 2024 ======== -->
+    <div class="year-group">
+      <h2 class="year-label"><em>2024</em></h2>
+      <div class="albums-grid">
+
+        <div class="album-card">
+          <div class="album-thumb">
+            <img src="https://images.unsplash.com/photo-1552083375-1447ce886485?w=600&q=80" alt="Antigua 2024" />
+            <div class="album-thumb-label">
+              <span>2024</span>
+              Antigua
+            </div>
+          </div>
+          <div class="album-body">
+            <p class="album-desc">Sailing, snorkelling, and sundowners on one of the Caribbean's most beautiful islands.</p>
+            <div class="album-actions">
+              <a href="https://photos.app.goo.gl/Y7Gk672h464zVBoTA" target="_blank" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/Y7Gk672h464zVBoTA" target="_blank" class="btn-add">+ Add Photos</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="album-card">
+          <div class="album-thumb">
+            <img src="https://images.unsplash.com/photo-1526392060635-9d6019884377?w=600&q=80" alt="Peru 2024" />
+            <div class="album-thumb-label">
+              <span>2024</span>
+              Peru
+            </div>
+          </div>
+          <div class="album-body">
+            <p class="album-desc">Machu Picchu at sunrise, the Sacred Valley, and the ancient wonders of the Inca Empire.</p>
+            <div class="album-actions">
+              <a href="https://photos.app.goo.gl/TYVr4abonZVu8J4c7" target="_blank" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/TYVr4abonZVu8J4c7" target="_blank" class="btn-add">+ Add Photos</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="album-card">
+          <div class="album-thumb">
+            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&q=80" alt="Bali 2024" />
+            <div class="album-thumb-label">
+              <span>2024</span>
+              Bali, Indonesia
+            </div>
+          </div>
+          <div class="album-body">
+            <p class="album-desc">Rice terraces, temple ceremonies, and the spiritual calm of the Island of the Gods.</p>
+            <div class="album-actions">
+              <a href="https://photos.app.goo.gl/95w2tzLbxynwFBKd8" target="_blank" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/95w2tzLbxynwFBKd8" target="_blank" class="btn-add">+ Add Photos</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ======== 2023 ======== -->
+    <div class="year-group">
+      <h2 class="year-label"><em>2023</em></h2>
+      <div class="albums-grid">
+
+        <div class="album-card">
+          <div class="album-thumb">
+            <img src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=600&q=80" alt="Egypt 2023" />
+            <div class="album-thumb-label">
+              <span>2023</span>
+              Egypt
+            </div>
+          </div>
+          <div class="album-body">
+            <p class="album-desc">The Pyramids of Giza, a Nile cruise at dusk, and the ancient mysteries of Luxor and the Valley of the Kings.</p>
+            <div class="album-actions">
+              <a href="https://photos.app.goo.gl/cCTCFtZXZbFfbJXK6" target="_blank" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/cCTCFtZXZbFfbJXK6" target="_blank" class="btn-add">+ Add Photos</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- end albums-wrap -->
+
+  <footer>
+    <p>© 2025 Nirvana Group Travels · <a href="index.html">Back to Home</a></p>
+  </footer>
+
+</body>
+</html>

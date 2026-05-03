@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reviews — Nirvana Group Travels</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sand: #F5EFE0; --ink: #1A1610; --ink-soft: #4A4030;
+      --gold: #C4973A; --gold-light: #E8C068; --white: #FDFAF4;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); }
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(253, 250, 244, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196, 151, 58, 0.15);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 600; letter-spacing: 0.04em;
+      color: var(--ink); text-decoration: none;
+    }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--ink-soft);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a.active { color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
+    .nav-cta {
+      background: var(--gold); color: var(--white) !important;
+      padding: 0.5rem 1.25rem; border-radius: 2px; border-bottom: none !important;
+    }
+    .nav-cta:hover { background: var(--ink) !important; }
+    .page-hero {
+      padding: 10rem 2rem 5rem;
+      text-align: center;
+      background: linear-gradient(to bottom, var(--sand) 0%, var(--white) 100%);
+    }
+    .page-tag {
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1rem;
+    }
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 300; color: var(--ink);
+    }
+    .page-title em { font-style: italic; color: var(--gold); }
+    .coming-soon {
+      margin: 5rem auto; max-width: 500px; text-align: center; padding: 0 2rem;
+    }
+    .coming-soon p {
+      font-size: 1rem; color: #6B5E44; line-height: 1.7;
+    }
+    footer { background: var(--ink); color: rgba(255,255,255,0.5); padding: 3rem; text-align: center; }
+    footer a { color: var(--gold-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Nirvana Group <span>Travels</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="previous-trips.html">Previous Trips</a></li>
+      <li><a href="upcoming-trips.html">Upcoming Trips</a></li>
+      <li><a href="reviews.html" class="active">Reviews</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <span class="page-tag">Nirvana Group Travels</span>
+    <h1 class="page-title"><em>Reviews</em></h1>
+  </div>
+
+  <div class="coming-soon">
+    <p>This page is coming soon. Content will be added here shortly.</p>
+  </div>
+
+  <footer>
+    <p>© 2025 Nirvana Group Travels · <a href="index.html">Back to Home</a></p>
+  </footer>
+
+</body>
+</html>
