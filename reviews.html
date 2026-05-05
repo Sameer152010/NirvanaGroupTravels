@@ -137,7 +137,7 @@
 
     /* Star rating selector */
     .star-selector { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 0.25rem; margin-top: 0.25rem; }
-    .star-selector input { display: none; }
+    .star-selector input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: -1px; }
     .star-selector label {
       font-size: 1.75rem; color: var(--sand-dark); cursor: pointer;
       transition: color 0.15s; line-height: 1;
@@ -145,6 +145,7 @@
     .star-selector label:hover,
     .star-selector label:hover ~ label,
     .star-selector input:checked ~ label { color: var(--gold); }
+    .star-selector input:focus-visible + label { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 2px; }
 
     .btn-submit {
       width: 100%; padding: 0.9rem;
@@ -177,22 +178,53 @@
       .form-box { padding: 1.75rem; }
       .form-row-half { grid-template-columns: 1fr; }
     }
+
+    /* ---- ADA / WCAG 2.1 AA ADDITIONS ---- */
+    .skip-link {
+      position: absolute; top: -100%; left: 1rem;
+      background: var(--ink); color: var(--white);
+      padding: 0.75rem 1.25rem; border-radius: 2px;
+      font-size: 0.875rem; font-weight: 500; text-decoration: none;
+      z-index: 9999; transition: top 0.2s;
+    }
+    .skip-link:focus { top: 1rem; }
+    a:focus-visible, button:focus-visible, input:focus-visible,
+    select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid var(--gold); outline-offset: 3px;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    /* Boost muted text contrast */
+    .text-muted, .review-trip, .album-desc, .footer-desc,
+    .hero-subtitle, .page-subtitle, .info-intro, .form-sub,
+    .footer-links a, .footer-bottom { color: #5a4e36; }
+    .footer-links a { color: rgba(255,255,255,0.75); }
+    .why-text { color: rgba(255,255,255,0.8); }
+    footer { color: rgba(255,255,255,0.75); }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <nav>
+  <header role="banner" style="display:contents;">
+  <nav aria-label="Main navigation">
     <!-- LOGO: Replace with: <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Nirvana Group Travels" /></a> -->
     <a href="index.html" class="nav-logo">Nirvana Group <span>Travels</span></a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="previous-trips.html">Previous Trips</a></li>
       <li><a href="upcoming-trips.html">Upcoming Trips</a></li>
-      <li><a href="reviews.html" class="active">Reviews</a></li>
+      <li><a href="reviews.html" class="active" aria-current="page">Reviews</a></li>
+      <li><a href="about.html">About Us</a></li>
       <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
     </ul>
   </nav>
+</header>
 
+  <main id="main-content">
   <div class="page-hero">
     <span class="page-tag">Straight from our travellers</span>
     <h1 class="page-title">What people are <em>saying</em></h1>
@@ -209,8 +241,8 @@
         ADD NEW REVIEWS HERE — copy this block and paste below it:
 
         <div class="review-card">
-          <span class="review-quote">"</span>
-          <p class="review-stars">★★★★★</p>
+          <span class="review-quote" aria-hidden="true">"</span>
+          <p class="review-stars" aria-label="5 out of 5 stars"><span aria-hidden="true">★★★★★</span></p>
           <p class="review-text">Paste the reviewer's words here.</p>
           <div class="review-author">
             <div class="review-avatar">XX</div>
@@ -225,8 +257,8 @@
       -->
 
       <div class="review-card">
-        <span class="review-quote">"</span>
-        <p class="review-stars">★★★★★</p>
+        <span class="review-quote" aria-hidden="true">"</span>
+        <p class="review-stars" aria-label="5 out of 5 stars"><span aria-hidden="true">★★★★★</span></p>
         <p class="review-text">Nirvana Group Travels turned what I thought would be a complicated trip into the most seamless, magical two weeks of my life. Every single detail was perfect.</p>
         <div class="review-author">
           <div class="review-avatar">SR</div>
@@ -238,8 +270,8 @@
       </div>
 
       <div class="review-card">
-        <span class="review-quote">"</span>
-        <p class="review-stars">★★★★★</p>
+        <span class="review-quote" aria-hidden="true">"</span>
+        <p class="review-stars" aria-label="5 out of 5 stars"><span aria-hidden="true">★★★★★</span></p>
         <p class="review-text">The Kenya safari exceeded every expectation. Watching the great migration at dawn with our guide — an experience I'll carry with me forever.</p>
         <div class="review-author">
           <div class="review-avatar">MK</div>
@@ -251,8 +283,8 @@
       </div>
 
       <div class="review-card">
-        <span class="review-quote">"</span>
-        <p class="review-stars">★★★★★</p>
+        <span class="review-quote" aria-hidden="true">"</span>
+        <p class="review-stars" aria-label="5 out of 5 stars"><span aria-hidden="true">★★★★★</span></p>
         <p class="review-text">I've travelled with many agencies and Nirvana is simply in a different league. The attention to detail, the warmth of the team — truly exceptional.</p>
         <div class="review-author">
           <div class="review-avatar">LB</div>
@@ -292,38 +324,18 @@
           </div>
         </div>
 
-        <div class="form-row">
-          <label for="trip">Which trip were you on?</label>
-          <select id="trip" name="trip" required>
-            <option value="">— Select a trip —</option>
-            <optgroup label="2026">
-              <option>Cancun 2026</option>
-            </optgroup>
-            <optgroup label="2025">
-              <option>Chile 2025</option>
-              <option>Turkey 2025</option>
-              <option>Punta Cana 2025</option>
-            </optgroup>
-            <optgroup label="2024">
-              <option>Antigua 2024</option>
-              <option>Peru 2024</option>
-              <option>Bali 2024</option>
-            </optgroup>
-            <optgroup label="2023">
-              <option>Egypt 2023</option>
-            </optgroup>
-          </select>
-        </div>
 
         <div class="form-row">
-          <label>Your Rating</label>
-          <div class="star-selector">
-            <input type="radio" id="star5" name="rating" value="5 stars" required /><label for="star5" title="5 stars">★</label>
-            <input type="radio" id="star4" name="rating" value="4 stars" /><label for="star4" title="4 stars">★</label>
-            <input type="radio" id="star3" name="rating" value="3 stars" /><label for="star3" title="3 stars">★</label>
-            <input type="radio" id="star2" name="rating" value="2 stars" /><label for="star2" title="2 stars">★</label>
-            <input type="radio" id="star1" name="rating" value="1 star"  /><label for="star1" title="1 star">★</label>
-          </div>
+          <fieldset style="border:none;padding:0;margin:0;">
+            <legend style="font-size:0.72rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:0.45rem;">Your Rating <span aria-hidden="true">*</span><span class="sr-only">(required)</span></legend>
+            <div class="star-selector" role="radiogroup" aria-required="true">
+              <input type="radio" id="star5" name="rating" value="5 stars" required /><label for="star5"><span aria-hidden="true">★</span><span class="sr-only">5 stars</span></label>
+              <input type="radio" id="star4" name="rating" value="4 stars" /><label for="star4"><span aria-hidden="true">★</span><span class="sr-only">4 stars</span></label>
+              <input type="radio" id="star3" name="rating" value="3 stars" /><label for="star3"><span aria-hidden="true">★</span><span class="sr-only">3 stars</span></label>
+              <input type="radio" id="star2" name="rating" value="2 stars" /><label for="star2"><span aria-hidden="true">★</span><span class="sr-only">2 stars</span></label>
+              <input type="radio" id="star1" name="rating" value="1 star"  /><label for="star1"><span aria-hidden="true">★</span><span class="sr-only">1 star</span></label>
+            </div>
+          </fieldset>
         </div>
 
         <div class="form-row">
@@ -342,7 +354,9 @@
     </div>
   </div>
 
-  <footer>
+  </main>
+
+  <footer role="contentinfo" aria-label="Footer navigation">
     <p>© 2025 Nirvana Group Travels · <a href="index.html">Back to Home</a></p>
   </footer>
 

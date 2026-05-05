@@ -28,6 +28,7 @@
     }
     .nav-logo img { height: 38px; width: auto; }
     .nav-logo span { color: var(--gold); }
+    
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
       font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase;
@@ -51,6 +52,7 @@
     .hero-title em { font-style: italic; color: var(--gold-light); }
     .hero-subtitle { font-size: 1rem; font-weight: 300; color: rgba(253,250,244,0.8); max-width: 480px; line-height: 1.7; margin-bottom: 2.5rem; }
     .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .hero-subtitle span { color: var(--white)}
     .btn-primary { background: var(--gold); color: var(--white); padding: 0.85rem 2.5rem; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
     .btn-primary:hover { background: var(--white); color: var(--ink); }
     .btn-outline { border: 1px solid rgba(253,250,244,0.6); color: var(--white); padding: 0.85rem 2.5rem; font-size: 0.85rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
@@ -113,162 +115,202 @@
     .footer-links a { font-size: 0.875rem; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--gold-light); }
     .footer-bottom { max-width: 1100px; margin: 2rem auto 0; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; flex-wrap: wrap; gap: 1rem; }
-
+    .footer-logo {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600;
+      letter-spacing: 0.04em; color: var(--white); text-decoration: none;
+    }
+    .footer-logo img { height: 38px; width: auto; }
+    .footer-logo span { color: var(--gold); }
+    
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
       section { padding: 4rem 1.25rem; }
       .destinations-grid { grid-template-columns: 1fr; }
       .footer-inner { grid-template-columns: 1fr 1fr; }
     }
+
+    /* ---- ADA / WCAG 2.1 AA ADDITIONS ---- */
+    .skip-link {
+      position: absolute; top: -100%; left: 1rem;
+      background: var(--ink); color: var(--white);
+      padding: 0.75rem 1.25rem; border-radius: 2px;
+      font-size: 0.875rem; font-weight: 500; text-decoration: none;
+      z-index: 9999; transition: top 0.2s;
+    }
+    .skip-link:focus { top: 1rem; }
+    a:focus-visible, button:focus-visible, input:focus-visible,
+    select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid var(--gold); outline-offset: 3px;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    /* Boost muted text contrast */
+    .text-muted, .review-trip, .album-desc, .footer-desc,
+    .hero-subtitle, .page-subtitle, .info-intro, .form-sub,
+    .footer-links a, .footer-bottom { color: #5a4e36; }
+    .footer-links a { color: rgba(255,255,255,0.75); }
+    .why-text { color: rgba(255,255,255,0.8); }
+    footer { color: rgba(255,255,255,0.75); }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <nav>
+  <header role="banner">
+  <nav aria-label="Main navigation">
     <!-- LOGO: Replace with: <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Nirvana Group Travels" /></a> -->
     <a href="index.html" class="nav-logo">Nirvana Group <span>Travels</span></a>
     <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="index.html" class="active" aria-current="page">Home</a></li>
       <li><a href="previous-trips.html">Previous Trips</a></li>
       <li><a href="upcoming-trips.html">Upcoming Trips</a></li>
       <li><a href="reviews.html">Reviews</a></li>
+      <li><a href="about.html">About Us</a></li>
       <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
     </ul>
   </nav>
+</header>
 
-  <section id="hero">
+  <main id="main-content">
+  <section id="hero" aria-label="Hero banner">
     <p class="hero-eyebrow">Est. 2023 · Boutique Travel Specialists</p>
     <h1 class="hero-title">The world is <em>waiting</em> for you</h1>
-    <p class="hero-subtitle">Curated journeys to the planet's most extraordinary places. Every detail handled. Every moment unforgettable.</p>
+    <p class="hero-subtitle"><span>Curated journeys to the planet's most extraordinary places. Every detail handled. Every moment unforgettable.</span></p>
     <div class="hero-btns">
       <a href="upcoming-trips.html" class="btn-primary">Explore Trips</a>
       <a href="#destinations" class="btn-outline">View Destinations</a>
     </div>
   </section>
 
-  <section id="destinations">
+  <section id="destinations" aria-labelledby="destinations-heading">
     <div class="section-header">
       <span class="section-tag">2025 Upcoming Trips</span>
-      <h2 class="section-title">Where we're going <em>next</em></h2>
+      <h2 class="section-title" id="destinations-heading">Where we're going <em>next</em></h2>
     </div>
     <div class="destinations-grid">
 
-      <a href="upcoming-trips.html#greece" class="dest-card">
+      <a href="upcoming-trips.html#greece" class="dest-card" aria-label="Greece — 7-Island Cruise, June 25 to July 5 2026. View trip details.">
         <img src="https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?q=80&w=435" alt="Greece 7-Island Cruise" />
         <div class="dest-overlay">
           <p class="dest-dates">June 25 – July 5, 2026</p>
           <h3 class="dest-name">Greece — 7-Island Cruise</h3>
           <p class="dest-sub">10 days · Santorini, Mykonos, Crete, Milos, Rhodes & more</p>
-          <span class="dest-link">View details →</span>
+          <span class="dest-link" aria-hidden="true">View details →</span>
         </div>
       </a>
 
-      <a href="upcoming-trips.html#istanbul" class="dest-card">
+      <a href="upcoming-trips.html#istanbul" class="dest-card" aria-label="Istanbul, Turkey, July 5 to 7 2026. View trip details.">
         <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&q=80" alt="Istanbul, Turkey" />
         <div class="dest-overlay">
           <p class="dest-dates">July 5 – 7, 2026</p>
           <h3 class="dest-name">Istanbul, Turkey</h3>
           <p class="dest-sub">3 days · Bosphorus cruise, Grand Bazaar & historic sites</p>
-          <span class="dest-link">View details →</span>
+          <span class="dest-link" aria-hidden="true">View details →</span>
         </div>
       </a>
 
-      <a href="upcoming-trips.html#punta-cana" class="dest-card">
+      <a href="upcoming-trips.html#punta-cana" class="dest-card" aria-label="Punta Cana, Dominican Republic, September 2026. View trip details.">
         <img src="https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=800&q=80" alt="Punta Cana" />
         <div class="dest-overlay">
           <p class="dest-dates">September 3 - 7, 2026</p>
           <h3 class="dest-name">Punta Cana, Dominican Republic</h3>
           <p class="dest-sub">All-inclusive resort · Golf, beach & Ibiza-style parties</p>
-          <span class="dest-link">View details →</span>
+          <span class="dest-link" aria-hidden="true">View details →</span>
         </div>
       </a>
 
-      <a href="upcoming-trips.html#vietnam" class="dest-card">
+      <a href="upcoming-trips.html#vietnam" class="dest-card" aria-label="Vietnam, November 2026. View trip details.">
         <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80" alt="Vietnam" />
         <div class="dest-overlay">
           <p class="dest-dates">November 20 - 29, 2026</p>
           <h3 class="dest-name">Vietnam</h3>
           <p class="dest-sub">Itinerary under planning — details coming soon</p>
-          <span class="dest-link">View details →</span>
+          <span class="dest-link" aria-hidden="true">View details →</span>
         </div>
       </a>
 
     </div>
   </section>
 
-  <section id="why">
+  <section id="why" aria-labelledby="why-heading">
     <div class="section-header">
       <span class="section-tag">Why travel with us</span>
-      <h2 class="section-title">The <em>Nirvana</em> difference</h2>
+      <h2 class="section-title" id="why-heading">The <em>Nirvana</em> difference</h2>
     </div>
     <div class="why-grid">
       <div class="why-item">
-        <span class="why-icon">✦</span>
+        <span class="why-icon" aria-hidden="true"><span aria-hidden="true">✦</span></span>
         <h3 class="why-title">Bespoke Itineraries</h3>
         <p class="why-text">Every trip is tailored to you — no cookie-cutter packages, no rushed buses. Your pace, your interests, your journey.</p>
       </div>
       <div class="why-item">
-        <span class="why-icon">◈</span>
+        <span class="why-icon" aria-hidden="true"><span aria-hidden="true">◈</span></span>
         <h3 class="why-title">Expert Local Guides</h3>
         <p class="why-text">Our on-the-ground network of local specialists unlock experiences most travellers never find.</p>
       </div>
       <div class="why-item">
-        <span class="why-icon">◇</span>
+        <span class="why-icon" aria-hidden="true"><span aria-hidden="true">◇</span></span>
         <h3 class="why-title">24/7 Support</h3>
         <p class="why-text">A real person, always on call. Whatever happens, wherever you are, we've got you covered.</p>
       </div>
       <div class="why-item">
-        <span class="why-icon">⬡</span>
+        <span class="why-icon" aria-hidden="true"><span aria-hidden="true">⬡</span></span>
         <h3 class="why-title">Sustainable Travel</h3>
         <p class="why-text">We partner with eco-conscious operators and offset every journey. See the world, protect it too.</p>
       </div>
     </div>
   </section>
 
-  <section id="reviews">
+  <section id="reviews" aria-labelledby="reviews-heading">
     <div class="section-header">
       <span class="section-tag">What our travellers say</span>
-      <h2 class="section-title">Stories from the <em>road</em></h2>
+      <h2 class="section-title" id="reviews-heading">Stories from the <em>road</em></h2>
     </div>
     <div class="reviews-grid">
       <div class="review-card">
-        <span class="review-quote">"</span>
+        <span class="review-quote" aria-hidden="true">"</span>
         <p class="review-text">Nirvana Group Travels turned what I thought would be a complicated trip into the most seamless, magical two weeks of my life. Every single detail was perfect.</p>
         <div class="review-author">
           <div class="review-avatar">SR</div>
-          <div><p class="review-name">Sarah R.</p><p class="review-trip">Japan Cherry Blossom Tour</p><p class="stars">★★★★★</p></div>
+          <div><p class="review-name">Sarah R.</p><p class="review-trip">Japan Cherry Blossom Tour</p><p class="stars" aria-label="5 out of 5 stars"><span aria-hidden="true">★★★★★</span></p></div>
         </div>
       </div>
       <div class="review-card">
-        <span class="review-quote">"</span>
+        <span class="review-quote" aria-hidden="true">"</span>
         <p class="review-text">The Kenya safari exceeded every expectation. Watching the great migration at dawn with our guide — an experience I'll carry with me forever.</p>
         <div class="review-author">
           <div class="review-avatar">MK</div>
-          <div><p class="review-name">Marcus K.</p><p class="review-trip">Kenya Safari & Coast</p><p class="stars">★★★★★</p></div>
+          <div><p class="review-name">Marcus K.</p><p class="review-trip">Kenya Safari & Coast</p><p class="stars" aria-label="5 out of 5 stars"><span aria-hidden="true">★★★★★</span></p></div>
         </div>
       </div>
       <div class="review-card">
-        <span class="review-quote">"</span>
+        <span class="review-quote" aria-hidden="true">"</span>
         <p class="review-text">I've travelled with many agencies and Nirvana is simply in a different league. The attention to detail, the warmth of the team — truly exceptional.</p>
         <div class="review-author">
           <div class="review-avatar">LB</div>
-          <div><p class="review-name">Lucia B.</p><p class="review-trip">Patagonia W-Trek</p><p class="stars">★★★★★</p></div>
+          <div><p class="review-name">Lucia B.</p><p class="review-trip">Patagonia W-Trek</p><p class="stars" aria-label="5 out of 5 stars"><span aria-hidden="true">★★★★★</span></p></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="cta">
+  <section id="cta" aria-labelledby="cta-heading">
     <span class="section-tag">Begin your journey</span>
-    <h2 class="section-title">Ready to go <em>somewhere</em> extraordinary?</h2>
+    <h2 class="section-title" id="cta-heading">Ready to go <em>somewhere</em> extraordinary?</h2>
     <p>Tell us your dream destination and we'll craft a journey built entirely around you.</p>
     <a href="contact.html" class="btn-primary">Start Planning Today</a>
   </section>
 
-  <footer>
+  </main>
+
+  <footer role="contentinfo" aria-label="Footer navigation">
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="index.html" class="nav-logo">Nirvana Group <span>Travels</span></a>
+        <a href="index.html" class="footer-logo">Nirvana Group <span>Travels</span></a>
         <p class="footer-desc">Boutique travel specialists crafting extraordinary journeys since 2023. Every trip, a story worth telling.</p>
       </div>
       <div>
@@ -290,8 +332,8 @@
         <p class="footer-heading">Contact</p>
         <ul class="footer-links">
           <li><a href="mailto:info@nirvanagrouptravels.com">info@nirvanagrouptravels.com</a></li>
-          <li><a href="https://www.instagram.com/nirvanatravelsjdg?igsh=NG9qMWZmY201M2Js" target="_blank">Instagram</a></li>
-          <li><a href="https://www.facebook.com/share/1D8yXYgJvu/?mibextid=wwXlfr" target="_blank">Facebook</a></li>
+          <li><a href="https://www.instagram.com/nirvanatravelsjdg?igsh=NG9qMWZmY201M2Js" target="_blank" aria-label="Instagram (opens in new tab)">Instagram</a></li>
+          <li><a href="https://www.facebook.com/share/1D8yXYgJvu/?mibextid=wwXlfr" target="_blank" aria-label="Facebook (opens in new tab)">Facebook</a></li>
         </ul>
       </div>
     </div>

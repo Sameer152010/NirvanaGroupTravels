@@ -124,22 +124,53 @@
       .trip-entry:nth-child(even) { direction: ltr; }
       .trips-list { padding: 3rem 1.25rem 4rem; gap: 4rem; }
     }
+
+    /* ---- ADA / WCAG 2.1 AA ADDITIONS ---- */
+    .skip-link {
+      position: absolute; top: -100%; left: 1rem;
+      background: var(--ink); color: var(--white);
+      padding: 0.75rem 1.25rem; border-radius: 2px;
+      font-size: 0.875rem; font-weight: 500; text-decoration: none;
+      z-index: 9999; transition: top 0.2s;
+    }
+    .skip-link:focus { top: 1rem; }
+    a:focus-visible, button:focus-visible, input:focus-visible,
+    select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid var(--gold); outline-offset: 3px;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    /* Boost muted text contrast */
+    .text-muted, .review-trip, .album-desc, .footer-desc,
+    .hero-subtitle, .page-subtitle, .info-intro, .form-sub,
+    .footer-links a, .footer-bottom { color: #5a4e36; }
+    .footer-links a { color: rgba(255,255,255,0.75); }
+    .why-text { color: rgba(255,255,255,0.8); }
+    footer { color: rgba(255,255,255,0.75); }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <nav>
+  <header role="banner" style="display:contents;">
+  <nav aria-label="Main navigation">
     <!-- LOGO: Replace with: <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Nirvana Group Travels" /></a> -->
     <a href="index.html" class="nav-logo">Nirvana Group <span>Travels</span></a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="previous-trips.html">Previous Trips</a></li>
-      <li><a href="upcoming-trips.html" class="active">Upcoming Trips</a></li>
+      <li><a href="upcoming-trips.html" class="active" aria-current="page">Upcoming Trips</a></li>
       <li><a href="reviews.html">Reviews</a></li>
+      <li><a href="about.html">About Us</a></li>
       <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
     </ul>
   </nav>
+</header>
 
+  <main id="main-content">
   <div class="page-hero">
     <span class="page-tag">Nirvana Group Travels · 2025</span>
     <h1 class="page-title"><em>Upcoming</em> Trips</h1>
@@ -286,7 +317,9 @@
     <a href="contact.html" class="btn-primary">Contact Us</a>
   </div>
 
-  <footer>
+  </main>
+
+  <footer role="contentinfo" aria-label="Footer navigation">
     <p>© 2025 Nirvana Group Travels · <a href="index.html">Back to Home</a></p>
   </footer>
 

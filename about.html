@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Nirvana Group Travels</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sand: #F5EFE0; --sand-dark: #E8DCBF; --ink: #1A1610; --ink-soft: #4A4030;
+      --gold: #C4973A; --gold-light: #E8C068; --white: #FDFAF4; --text-muted: #5a4e36;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); overflow-x: hidden; }
+
+    /* ---- ADA ---- */
+    .skip-link {
+      position: absolute; top: -100%; left: 1rem;
+      background: var(--ink); color: var(--white);
+      padding: 0.75rem 1.25rem; border-radius: 2px;
+      font-size: 0.875rem; font-weight: 500; text-decoration: none;
+      z-index: 9999; transition: top 0.2s;
+    }
+    .skip-link:focus { top: 1rem; }
+    a:focus-visible, button:focus-visible, input:focus-visible,
+    select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid var(--gold); outline-offset: 3px;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* ---- NAV ---- */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(253,250,244,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196,151,58,0.15);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600;
+      letter-spacing: 0.04em; color: var(--ink); text-decoration: none;
+    }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--ink-soft); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a.active { color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
+    .nav-cta { background: var(--gold); color: var(--white) !important; padding: 0.5rem 1.25rem; border-radius: 2px; border-bottom: none !important; }
+    .nav-cta:hover { background: var(--ink) !important; color: var(--white) !important; }
+
+    /* ---- PAGE HERO ---- */
+    .page-hero {
+      padding: 9rem 2rem 4rem; text-align: center;
+      background: linear-gradient(to bottom, var(--sand) 0%, var(--white) 100%);
+    }
+    .page-tag { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1rem; }
+    .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem,6vw,5rem); font-weight: 300; color: var(--ink); }
+    .page-title em { font-style: italic; color: var(--gold); }
+
+    /* ---- ABOUT LAYOUT ---- */
+    .about-wrap {
+      max-width: 1100px; margin: 0 auto;
+      padding: 5rem 2rem 7rem;
+      display: grid; grid-template-columns: 1fr 1.35fr; gap: 5rem; align-items: start;
+    }
+
+    /* ---- LEFT: PHOTO ---- */
+    .about-photo-col { position: sticky; top: 7rem; }
+
+    .about-photo {
+      width: 100%; aspect-ratio: 3/4;
+      border-radius: 4px; overflow: hidden;
+      background: var(--sand);
+      border: 1px solid var(--sand-dark);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative;
+    }
+    .about-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+    }
+
+    /* Placeholder shown when no image is present */
+    .photo-placeholder {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      width: 100%; height: 100%; padding: 2rem; text-align: center;
+      color: var(--text-muted);
+    }
+    .photo-placeholder-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
+    .photo-placeholder p { font-size: 0.85rem; line-height: 1.6; opacity: 0.7; }
+    .photo-placeholder strong { display: block; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; color: var(--gold); }
+
+    /* ---- RIGHT: TEXT CONTENT ---- */
+    .about-content { padding-top: 0.5rem; }
+
+    .about-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 300; line-height: 1.3;
+      color: var(--ink); margin-bottom: 1.5rem;
+    }
+    .about-intro em { font-style: italic; color: var(--gold); }
+
+    .about-body p {
+      font-size: 0.95rem; color: var(--ink-soft); line-height: 1.85;
+      margin-bottom: 1.1rem;
+    }
+    .about-body p:last-child { margin-bottom: 0; }
+
+    /* Section dividers */
+    .about-section { margin-top: 3rem; }
+    .about-section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 400; color: var(--ink);
+      margin-bottom: 1.25rem; padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--sand-dark);
+    }
+    .about-section-title em { font-style: italic; color: var(--gold); }
+
+    /* Bullet lists */
+    .about-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.1rem; }
+    .about-list li {
+      font-size: 0.95rem; color: var(--ink-soft); line-height: 1.7;
+      padding-left: 1.25rem; position: relative;
+    }
+    .about-list li::before { content: '→'; position: absolute; left: 0; color: var(--gold); font-size: 0.8rem; top: 3px; }
+    .about-list li strong { color: var(--ink); font-weight: 500; }
+
+    /* Closing statement */
+    .about-closing {
+      margin-top: 3rem; padding: 2rem 2rem 2rem 1.75rem;
+      border-left: 3px solid var(--gold); background: var(--sand);
+      border-radius: 0 4px 4px 0;
+    }
+    .about-closing p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; font-weight: 400; font-style: italic;
+      color: var(--ink); line-height: 1.6;
+    }
+
+    /* ---- FOOTER ---- */
+    footer { background: var(--ink); color: rgba(255,255,255,0.75); padding: 3rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.06); }
+    footer a { color: var(--gold-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ---- MOBILE ---- */
+    @media (max-width: 860px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+      .about-wrap { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.25rem 5rem; }
+      .about-photo-col { position: static; }
+      .about-photo { aspect-ratio: 4/3; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header role="banner">
+  <nav aria-label="Main navigation">
+    <!-- LOGO: Replace with: <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Nirvana Group Travels" /></a> -->
+    <a href="index.html" class="nav-logo">Nirvana Group <span>Travels</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="previous-trips.html">Previous Trips</a></li>
+      <li><a href="upcoming-trips.html">Upcoming Trips</a></li>
+      <li><a href="reviews.html">Reviews</a></li>
+      <li><a href="about.html" class="active" aria-current="page">About Us</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+  </nav>
+  </header>
+
+  <div class="page-hero" id="main-content">
+    <span class="page-tag">Our story</span>
+    <h1 class="page-title">About <em>Us</em></h1>
+  </div>
+
+  <div class="about-wrap">
+
+    <!-- LEFT: PHOTO -->
+    <div class="about-photo-col">
+      <div class="about-photo">
+        <!--
+          TO ADD YOUR PHOTO:
+          1. Place your image file in the same folder as this HTML file (e.g. images/about-us.jpg)
+          2. Replace the placeholder below with:
+             <img src="images/about-us.jpg" alt="The Nirvana Travels team" />
+          3. Delete the <div class="photo-placeholder">...</div> block
+        -->
+        <p><img src="images/about-us.jpeg" alt="The Nirvana Travels team" /></p>
+      </div>
+    </div>
+
+    <!-- RIGHT: CONTENT -->
+    <article class="about-content" aria-label="About Nirvana Travels">
+
+      <h2 class="about-intro">At Nirvana Travels, travel isn't just a service — it's a <em>passion</em> that turned into a purpose.</h2>
+
+      <div class="about-body">
+        <p>Founded in 2023, Nirvana Travels began as a simple idea fueled by curiosity, exploration, and encouragement from friends who believed that great travel experiences should be shared. What started as planning trips for friends and family has now grown into a trusted travel platform built on experience, detail, and genuine love for discovering the world.</p>
+        <p>This is a family-driven venture, run by me and my 16-year-old son — the creative mind behind our website and the person who manages its day-to-day operations. Together, we blend passion with fresh perspective, combining real-world travel experience with modern execution.</p>
+      </div>
+
+      <!-- PHILOSOPHY -->
+      <section class="about-section" aria-labelledby="philosophy-heading">
+        <h2 class="about-section-title" id="philosophy-heading">Our <em>Philosophy</em></h2>
+        <p class="about-body" style="font-size:0.95rem;color:var(--ink-soft);line-height:1.85;margin-bottom:1rem;">Travel, for us, goes far beyond ticking destinations off a list. It's about:</p>
+        <ul class="about-list" aria-label="Our travel philosophy">
+          <li>Understanding cultures and traditions</li>
+          <li>Exploring local cuisines and hidden gems</li>
+          <li>Connecting with people and their stories</li>
+          <li>Experiencing destinations in a meaningful, immersive way</li>
+        </ul>
+        <p class="about-body" style="font-size:0.95rem;color:var(--ink-soft);line-height:1.85;">Before every trip we design, we invest significant time researching destinations — diving deep into their history, culture, and local experiences — so you don't just visit a place, you truly experience it.</p>
+      </section>
+
+      <!-- WHAT WE DO -->
+      <section class="about-section" aria-labelledby="whatwedo-heading">
+        <h2 class="about-section-title" id="whatwedo-heading">What We <em>Do</em></h2>
+        <p class="about-body" style="font-size:0.95rem;color:var(--ink-soft);line-height:1.85;margin-bottom:1rem;">We specialize in:</p>
+        <ul class="about-list" aria-label="Our specialties">
+          <li>Group travel experiences</li>
+          <li>Curated trips for small groups</li>
+          <li>Personalized journeys for couples and solo travelers</li>
+        </ul>
+        <p class="about-body" style="font-size:0.95rem;color:var(--ink-soft);line-height:1.85;">No trip is too big or too small for us. Every itinerary is crafted with the same level of care, detail, and enthusiasm — as if we were planning it for ourselves.</p>
+      </section>
+
+      <!-- WHAT MAKES US DIFFERENT -->
+      <section class="about-section" aria-labelledby="different-heading">
+        <h2 class="about-section-title" id="different-heading">What Makes Us <em>Different</em></h2>
+        <ul class="about-list" aria-label="What sets us apart">
+          <li><strong>Personal Touch:</strong> Every trip is thoughtfully curated, not mass-produced</li>
+          <li><strong>Local Partnerships:</strong> We collaborate with local businesses in each destination, supporting communities while delivering authentic experiences</li>
+          <li><strong>Best Value:</strong> By working directly with local partners, we ensure highly competitive pricing without compromising quality</li>
+          <li><strong>Passion Over Profit:</strong> We operate with reasonable margins because our goal is long-term relationships, not short-term gains</li>
+        </ul>
+      </section>
+
+      <!-- OUR JOURNEY -->
+      <section class="about-section" aria-labelledby="journey-heading">
+        <h2 class="about-section-title" id="journey-heading">Our Journey <em>So Far</em></h2>
+        <p class="about-body" style="font-size:0.95rem;color:var(--ink-soft);line-height:1.85;">From organizing multiple group trips to planning travel for friends, families, couples, and solo explorers, our journey has been powered by trust and word-of-mouth. The support we've received — especially from our close circle — has been the backbone of our growth.</p>
+      </section>
+
+      <!-- LOOKING AHEAD -->
+      <section class="about-section" aria-labelledby="ahead-heading">
+        <h2 class="about-section-title" id="ahead-heading">Looking <em>Ahead</em></h2>
+        <p class="about-body" style="font-size:0.95rem;color:var(--ink-soft);line-height:1.85;">We're proud of how far we've come, but this is just the beginning. As we continue to grow, our focus remains the same: delivering unforgettable travel experiences with honesty, passion, and attention to detail.</p>
+      </section>
+
+      <!-- CLOSING QUOTE -->
+      <div class="about-closing" role="complementary" aria-label="Our mission statement">
+        <p>Nirvana Travels isn't just about where you go. It's about how you experience the journey.</p>
+      </div>
+
+    </article>
+  </div>
+
+  <footer role="contentinfo">
+    <p>© 2025 Nirvana Group Travels · <a href="index.html">Back to Home</a></p>
+  </footer>
+
+</body>
+</html>

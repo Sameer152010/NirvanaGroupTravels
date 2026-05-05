@@ -144,22 +144,53 @@
       nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
       .albums-wrap { padding: 2rem 1.25rem 4rem; }
     }
+
+    /* ---- ADA / WCAG 2.1 AA ADDITIONS ---- */
+    .skip-link {
+      position: absolute; top: -100%; left: 1rem;
+      background: var(--ink); color: var(--white);
+      padding: 0.75rem 1.25rem; border-radius: 2px;
+      font-size: 0.875rem; font-weight: 500; text-decoration: none;
+      z-index: 9999; transition: top 0.2s;
+    }
+    .skip-link:focus { top: 1rem; }
+    a:focus-visible, button:focus-visible, input:focus-visible,
+    select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid var(--gold); outline-offset: 3px;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    /* Boost muted text contrast */
+    .text-muted, .review-trip, .album-desc, .footer-desc,
+    .hero-subtitle, .page-subtitle, .info-intro, .form-sub,
+    .footer-links a, .footer-bottom { color: #5a4e36; }
+    .footer-links a { color: rgba(255,255,255,0.75); }
+    .why-text { color: rgba(255,255,255,0.8); }
+    footer { color: rgba(255,255,255,0.75); }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <nav>
+  <header role="banner" style="display:contents;">
+  <nav aria-label="Main navigation">
     <!-- LOGO: Replace with: <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Nirvana Group Travels" /></a> -->
     <a href="index.html" class="nav-logo">Nirvana Group <span>Travels</span></a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="previous-trips.html" class="active">Previous Trips</a></li>
+      <li><a href="previous-trips.html" class="active" aria-current="page">Previous Trips</a></li>
       <li><a href="upcoming-trips.html">Upcoming Trips</a></li>
       <li><a href="reviews.html">Reviews</a></li>
+      <li><a href="about.html">About Us</a></li>
       <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
     </ul>
   </nav>
+</header>
 
+  <main id="main-content">
   <div class="page-hero">
     <span class="page-tag">Memories from the road</span>
     <h1 class="page-title"><em>Previous</em> Trips</h1>
@@ -169,7 +200,7 @@
   <div class="albums-wrap">
 
     <div class="upload-notice">
-      <span class="upload-notice-icon">📷</span>
+      <span class="upload-notice-icon" aria-hidden="true">📷</span>
       <p><strong>Were you on one of these trips?</strong> Click "Add Your Photos" on any album to contribute your own pictures. All you need is a Google account — your photos will appear in the shared album for everyone to enjoy.</p>
     </div>
 
@@ -190,8 +221,8 @@
           <div class="album-body">
             <p class="album-desc">Sun, turquoise waters, and the energy of the Caribbean. Our first adventure of 2026.</p>
             <div class="album-actions">
-              <a href="https://photos.app.goo.gl/LpmAQGnwMvwzmtxBA" target="_blank" class="btn-view">View Album</a>
-              <a href="https://photos.app.goo.gl/LpmAQGnwMvwzmtxBA" target="_blank" class="btn-add">+ Add Photos</a>
+              <a href="https://photos.app.goo.gl/LpmAQGnwMvwzmtxBA" target="_blank" aria-label="View Album (opens in new tab)" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/LpmAQGnwMvwzmtxBA" target="_blank" aria-label="+ Add Photos (opens in new tab)" class="btn-add">+ Add Photos</a>
             </div>
           </div>
         </div>
@@ -215,8 +246,26 @@
           <div class="album-body">
             <p class="album-desc">Istanbul's grand bazaars, the Bosphorus at golden hour, and the timeless beauty of Cappadocia.</p>
             <div class="album-actions">
-              <a href="https://photos.app.goo.gl/erTSqVdKc7J5iZXD7" target="_blank" class="btn-view">View Album</a>
-              <a href="https://photos.app.goo.gl/erTSqVdKc7J5iZXD7" target="_blank" class="btn-add">+ Add Photos</a>
+              <a href="https://photos.app.goo.gl/erTSqVdKc7J5iZXD7" target="_blank" aria-label="View Album (opens in new tab)" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/erTSqVdKc7J5iZXD7" target="_blank" aria-label="+ Add Photos (opens in new tab)" class="btn-add">+ Add Photos</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="album-card">
+          <div class="album-thumb">
+            <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=686" alt="Italy 2025" />
+            <div class="album-thumb-label">
+              <span>2025</span>
+              Italy
+            </div>
+          </div>
+          <div class="album-body">
+            <p class="album-desc">Naples, Amalfi, Positano, and Capri.
+            </p>
+            <div class="album-actions">
+              <a href="https://photos.app.goo.gl/gnLboZpmMuHgcUtHA" target="_blank" aria-label="View Album (opens in new tab)" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/gnLboZpmMuHgcUtHA" target="_blank" aria-label="+ Add Photos (opens in new tab)" class="btn-add">+ Add Photos</a>
             </div>
           </div>
         </div>
@@ -232,8 +281,8 @@
           <div class="album-body">
             <p class="album-desc">White sand beaches, all-inclusive luxury, and Ibiza-style parties under the Caribbean sky.</p>
             <div class="album-actions">
-              <a href="https://photos.app.goo.gl/SfdCwzVZsgum8FSQ6" target="_blank" class="btn-view">View Album</a>
-              <a href="https://photos.app.goo.gl/SfdCwzVZsgum8FSQ6" target="_blank" class="btn-add">+ Add Photos</a>
+              <a href="https://photos.app.goo.gl/SfdCwzVZsgum8FSQ6" target="_blank" aria-label="View Album (opens in new tab)" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/SfdCwzVZsgum8FSQ6" target="_blank" aria-label="+ Add Photos (opens in new tab)" class="btn-add">+ Add Photos</a>
             </div>
           </div>
         </div>
@@ -249,8 +298,8 @@
           <div class="album-body">
             <p class="album-desc">The raw drama of Patagonia — glaciers, mountains, and the wild windswept landscapes of the south.</p>
             <div class="album-actions">
-              <a href="https://photos.app.goo.gl/nEUikW1qcJVT3nV96" target="_blank" class="btn-view">View Album</a>
-              <a href="https://photos.app.goo.gl/nEUikW1qcJVT3nV96" target="_blank" class="btn-add">+ Add Photos</a>
+              <a href="https://photos.app.goo.gl/nEUikW1qcJVT3nV96" target="_blank" aria-label="View Album (opens in new tab)" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/nEUikW1qcJVT3nV96" target="_blank" aria-label="+ Add Photos (opens in new tab)" class="btn-add">+ Add Photos</a>
             </div>
           </div>
         </div>
@@ -274,8 +323,25 @@
           <div class="album-body">
             <p class="album-desc">Sailing, snorkelling, and sundowners on one of the Caribbean's most beautiful islands.</p>
             <div class="album-actions">
-              <a href="https://photos.app.goo.gl/Y7Gk672h464zVBoTA" target="_blank" class="btn-view">View Album</a>
-              <a href="https://photos.app.goo.gl/Y7Gk672h464zVBoTA" target="_blank" class="btn-add">+ Add Photos</a>
+              <a href="https://photos.app.goo.gl/Y7Gk672h464zVBoTA" target="_blank" aria-label="View Album (opens in new tab)" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/Y7Gk672h464zVBoTA" target="_blank" aria-label="+ Add Photos (opens in new tab)" class="btn-add">+ Add Photos</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="album-card">
+          <div class="album-thumb">
+            <img src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=600&q=80" alt="Egypt 2024" />
+            <div class="album-thumb-label">
+              <span>2024</span>
+              Egypt
+            </div>
+          </div>
+          <div class="album-body">
+            <p class="album-desc">The Pyramids of Giza, a Nile cruise at dusk, and the ancient mysteries of Luxor and the Valley of the Kings.</p>
+            <div class="album-actions">
+              <a href="https://photos.app.goo.gl/5fHZAJsx9MCQ6b7m7" target="_blank" aria-label="View Album (opens in new tab)" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/5fHZAJsx9MCQ6b7m7" target="_blank" aria-label="+ Add Photos (opens in new tab)" class="btn-add">+ Add Photos</a>
             </div>
           </div>
         </div>
@@ -291,8 +357,8 @@
           <div class="album-body">
             <p class="album-desc">Machu Picchu at sunrise, the Sacred Valley, and the ancient wonders of the Inca Empire.</p>
             <div class="album-actions">
-              <a href="https://photos.app.goo.gl/TYVr4abonZVu8J4c7" target="_blank" class="btn-view">View Album</a>
-              <a href="https://photos.app.goo.gl/TYVr4abonZVu8J4c7" target="_blank" class="btn-add">+ Add Photos</a>
+              <a href="https://photos.app.goo.gl/TYVr4abonZVu8J4c7" target="_blank" aria-label="View Album (opens in new tab)" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/TYVr4abonZVu8J4c7" target="_blank" aria-label="+ Add Photos (opens in new tab)" class="btn-add">+ Add Photos</a>
             </div>
           </div>
         </div>
@@ -308,8 +374,8 @@
           <div class="album-body">
             <p class="album-desc">Rice terraces, temple ceremonies, and the spiritual calm of the Island of the Gods.</p>
             <div class="album-actions">
-              <a href="https://photos.app.goo.gl/95w2tzLbxynwFBKd8" target="_blank" class="btn-view">View Album</a>
-              <a href="https://photos.app.goo.gl/95w2tzLbxynwFBKd8" target="_blank" class="btn-add">+ Add Photos</a>
+              <a href="https://photos.app.goo.gl/95w2tzLbxynwFBKd8" target="_blank" aria-label="View Album (opens in new tab)" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/95w2tzLbxynwFBKd8" target="_blank" aria-label="+ Add Photos (opens in new tab)" class="btn-add">+ Add Photos</a>
             </div>
           </div>
         </div>
@@ -333,8 +399,8 @@
           <div class="album-body">
             <p class="album-desc">The Pyramids of Giza, a Nile cruise at dusk, and the ancient mysteries of Luxor and the Valley of the Kings.</p>
             <div class="album-actions">
-              <a href="https://photos.app.goo.gl/cCTCFtZXZbFfbJXK6" target="_blank" class="btn-view">View Album</a>
-              <a href="https://photos.app.goo.gl/cCTCFtZXZbFfbJXK6" target="_blank" class="btn-add">+ Add Photos</a>
+              <a href="https://photos.app.goo.gl/cCTCFtZXZbFfbJXK6" target="_blank" aria-label="View Album (opens in new tab)" class="btn-view">View Album</a>
+              <a href="https://photos.app.goo.gl/cCTCFtZXZbFfbJXK6" target="_blank" aria-label="+ Add Photos (opens in new tab)" class="btn-add">+ Add Photos</a>
             </div>
           </div>
         </div>
@@ -344,7 +410,9 @@
 
   </div><!-- end albums-wrap -->
 
-  <footer>
+  </main>
+
+  <footer role="contentinfo" aria-label="Footer navigation">
     <p>© 2025 Nirvana Group Travels · <a href="index.html">Back to Home</a></p>
   </footer>
 
