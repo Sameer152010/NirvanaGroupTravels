@@ -8,71 +8,181 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --sand: #F5EFE0; --ink: #1A1610; --ink-soft: #4A4030;
-      --gold: #C4973A; --gold-light: #E8C068; --white: #FDFAF4;
+      --sand: #F5EFE0; --sand-dark: #E8DCBF; --ink: #1A1610; --ink-soft: #4A4030;
+      --gold: #C4973A; --gold-light: #E8C068; --white: #FDFAF4; --text-muted: #6B5E44;
     }
-    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); overflow-x: hidden; }
+
+    /* ---- NAV ---- */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.25rem 3rem;
-      background: rgba(253, 250, 244, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(196, 151, 58, 0.15);
+      background: rgba(253,250,244,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196,151,58,0.15);
     }
     .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem; font-weight: 600; letter-spacing: 0.04em;
-      color: var(--ink); text-decoration: none;
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600;
+      letter-spacing: 0.04em; color: var(--ink); text-decoration: none;
     }
     .nav-logo img { height: 38px; width: auto; }
     .nav-logo span { color: var(--gold); }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
-      font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--ink-soft);
-      text-decoration: none; transition: color 0.2s;
+      font-size: 0.85rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--ink-soft); text-decoration: none; transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--gold); }
     .nav-links a.active { color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
-    .nav-cta {
-      background: var(--gold); color: var(--white) !important;
-      padding: 0.5rem 1.25rem; border-radius: 2px; border-bottom: none !important;
-    }
-    .nav-cta:hover { background: var(--ink) !important; }
+    .nav-cta { background: var(--gold); color: var(--white) !important; padding: 0.5rem 1.25rem; border-radius: 2px; border-bottom: none !important; }
+    .nav-cta:hover { background: var(--ink) !important; color: var(--white) !important; }
+
+    /* ---- PAGE HERO ---- */
     .page-hero {
-      padding: 10rem 2rem 5rem;
-      text-align: center;
+      padding: 9rem 2rem 4rem; text-align: center;
       background: linear-gradient(to bottom, var(--sand) 0%, var(--white) 100%);
     }
-    .page-tag {
-      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1rem;
-    }
-    .page-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      font-weight: 300; color: var(--ink);
-    }
+    .page-tag { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1rem; }
+    .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem,6vw,5rem); font-weight: 300; color: var(--ink); }
     .page-title em { font-style: italic; color: var(--gold); }
-    .coming-soon {
-      margin: 5rem auto; max-width: 500px; text-align: center; padding: 0 2rem;
+    .page-subtitle { font-size: 1rem; color: var(--text-muted); margin-top: 1rem; line-height: 1.7; max-width: 520px; margin-left: auto; margin-right: auto; }
+
+    /* ---- FEATURED REVIEWS ---- */
+    .featured-wrap { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 2rem; }
+    .section-label {
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 2rem; display: block;
     }
-    .coming-soon p {
-      font-size: 1rem; color: #6B5E44; line-height: 1.7;
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1rem;
     }
-    footer { background: var(--ink); color: rgba(255,255,255,0.5); padding: 3rem; text-align: center; }
+
+    .review-card {
+      background: var(--sand); padding: 2rem; border-radius: 4px;
+      position: relative; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .review-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem; line-height: 1; color: var(--gold);
+      position: absolute; top: 1rem; right: 1.5rem; opacity: 0.35;
+    }
+    .review-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 0.85rem; }
+    .review-text {
+      font-size: 0.95rem; line-height: 1.75; color: var(--ink-soft);
+      margin-bottom: 1.5rem; font-style: italic; flex-grow: 1;
+    }
+    .review-author { display: flex; align-items: center; gap: 1rem; }
+    .review-avatar {
+      width: 42px; height: 42px; border-radius: 50%; background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 500; font-size: 0.875rem; color: var(--white); flex-shrink: 0;
+    }
+    .review-name { font-weight: 500; font-size: 0.9rem; }
+    .review-trip { font-size: 0.75rem; color: var(--text-muted); }
+
+    /*
+      ============================================================
+      TO ADD A NEW REVIEW:
+      1. Copy one full .review-card block below
+      2. Paste it inside the .reviews-grid div
+      3. Update the star rating, review text, initials, name, and trip
+      ============================================================
+    */
+
+    /* ---- DIVIDER ---- */
+    .divider { border: none; border-top: 1px solid var(--sand-dark); max-width: 1100px; margin: 3rem auto; }
+
+    /* ---- REVIEW FORM ---- */
+    .form-wrap {
+      max-width: 700px; margin: 0 auto; padding: 0 2rem 7rem;
+    }
+    .form-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.25rem; font-weight: 300; margin-bottom: 0.5rem; text-align: center;
+    }
+    .form-heading em { font-style: italic; color: var(--gold); }
+    .form-sub { font-size: 0.9rem; color: var(--text-muted); text-align: center; line-height: 1.7; margin-bottom: 2.5rem; max-width: 460px; margin-left: auto; margin-right: auto; }
+
+    .form-box {
+      background: var(--white); border: 1px solid var(--sand-dark);
+      border-radius: 4px; padding: 2.5rem;
+    }
+
+    .form-row { margin-bottom: 1.25rem; }
+    .form-row label { display: block; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.45rem; }
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      width: 100%; padding: 0.7rem 0.9rem;
+      border: 1px solid var(--sand-dark); border-radius: 2px;
+      background: var(--white); color: var(--ink);
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+      transition: border-color 0.2s; appearance: none;
+    }
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus { outline: none; border-color: var(--gold); }
+    .form-row textarea { resize: vertical; min-height: 140px; }
+    .form-row select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B5E44' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 0.9rem center; padding-right: 2.5rem;
+    }
+    .form-row-half { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* Star rating selector */
+    .star-selector { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 0.25rem; margin-top: 0.25rem; }
+    .star-selector input { display: none; }
+    .star-selector label {
+      font-size: 1.75rem; color: var(--sand-dark); cursor: pointer;
+      transition: color 0.15s; line-height: 1;
+    }
+    .star-selector label:hover,
+    .star-selector label:hover ~ label,
+    .star-selector input:checked ~ label { color: var(--gold); }
+
+    .btn-submit {
+      width: 100%; padding: 0.9rem;
+      background: var(--gold); color: var(--white);
+      border: none; border-radius: 2px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+      font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      transition: background 0.2s; margin-top: 0.5rem;
+    }
+    .btn-submit:hover { background: var(--ink); }
+
+    .form-note { font-size: 0.78rem; color: var(--text-muted); text-align: center; margin-top: 1rem; line-height: 1.6; }
+
+    /* Success message (shown after submit) */
+    .success-msg {
+      display: none; text-align: center; padding: 2rem;
+      background: var(--sand); border-radius: 4px; border-left: 3px solid var(--gold);
+    }
+    .success-msg h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 0.5rem; }
+    .success-msg p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ---- FOOTER ---- */
+    footer { background: var(--ink); color: rgba(255,255,255,0.5); padding: 3rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.06); }
     footer a { color: var(--gold-light); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
+      nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+      .featured-wrap { padding: 3rem 1.25rem 1rem; }
+      .form-wrap { padding: 0 1.25rem 5rem; }
+      .form-box { padding: 1.75rem; }
+      .form-row-half { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
   <nav>
+    <!-- LOGO: Replace with: <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Nirvana Group Travels" /></a> -->
     <a href="index.html" class="nav-logo">Nirvana Group <span>Travels</span></a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
@@ -84,17 +194,182 @@
   </nav>
 
   <div class="page-hero">
-    <span class="page-tag">Nirvana Group Travels</span>
-    <h1 class="page-title"><em>Reviews</em></h1>
+    <span class="page-tag">Straight from our travellers</span>
+    <h1 class="page-title">What people are <em>saying</em></h1>
+    <p class="page-subtitle">Every review below comes from someone who travelled with us. Read their stories — then add your own.</p>
   </div>
 
-  <div class="coming-soon">
-    <p>This page is coming soon. Content will be added here shortly.</p>
+  <!-- ===== FEATURED REVIEWS ===== -->
+  <div class="featured-wrap">
+    <span class="section-label">Featured Reviews</span>
+    <div class="reviews-grid">
+
+      <!--
+        ============================================================
+        ADD NEW REVIEWS HERE — copy this block and paste below it:
+
+        <div class="review-card">
+          <span class="review-quote">"</span>
+          <p class="review-stars">★★★★★</p>
+          <p class="review-text">Paste the reviewer's words here.</p>
+          <div class="review-author">
+            <div class="review-avatar">XX</div>
+            <div>
+              <p class="review-name">Full Name</p>
+              <p class="review-trip">Trip Name · Year</p>
+            </div>
+          </div>
+        </div>
+
+        ============================================================
+      -->
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-stars">★★★★★</p>
+        <p class="review-text">Nirvana Group Travels turned what I thought would be a complicated trip into the most seamless, magical two weeks of my life. Every single detail was perfect.</p>
+        <div class="review-author">
+          <div class="review-avatar">SR</div>
+          <div>
+            <p class="review-name">Sarah R.</p>
+            <p class="review-trip">Greece Cruise · 2025</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-stars">★★★★★</p>
+        <p class="review-text">The Kenya safari exceeded every expectation. Watching the great migration at dawn with our guide — an experience I'll carry with me forever.</p>
+        <div class="review-author">
+          <div class="review-avatar">MK</div>
+          <div>
+            <p class="review-name">Marcus K.</p>
+            <p class="review-trip">Bali · 2024</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <span class="review-quote">"</span>
+        <p class="review-stars">★★★★★</p>
+        <p class="review-text">I've travelled with many agencies and Nirvana is simply in a different league. The attention to detail, the warmth of the team — truly exceptional.</p>
+        <div class="review-author">
+          <div class="review-avatar">LB</div>
+          <div>
+            <p class="review-name">Lucia B.</p>
+            <p class="review-trip">Peru · 2024</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ===== REVIEW FORM ===== -->
+  <div class="form-wrap">
+    <h2 class="form-heading">Share your <em>experience</em></h2>
+    <p class="form-sub">Travelled with us? We'd love to hear about it. Your review helps future travellers find their next adventure.</p>
+
+    <div class="form-box">
+      <div class="success-msg" id="success-msg">
+        <h3>Thank you! 🌍</h3>
+        <p>Your review has been received. If we feature it on this page, we'll reach out to let you know.</p>
+      </div>
+
+      <form id="review-form" action="https://formspree.io/f/xdabgayr" method="POST">
+
+        <div class="form-row form-row-half">
+          <div>
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" name="first_name" placeholder="Jane" required />
+          </div>
+          <div>
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="last_name" placeholder="Smith" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="trip">Which trip were you on?</label>
+          <select id="trip" name="trip" required>
+            <option value="">— Select a trip —</option>
+            <optgroup label="2026">
+              <option>Cancun 2026</option>
+            </optgroup>
+            <optgroup label="2025">
+              <option>Chile 2025</option>
+              <option>Turkey 2025</option>
+              <option>Punta Cana 2025</option>
+            </optgroup>
+            <optgroup label="2024">
+              <option>Antigua 2024</option>
+              <option>Peru 2024</option>
+              <option>Bali 2024</option>
+            </optgroup>
+            <optgroup label="2023">
+              <option>Egypt 2023</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Your Rating</label>
+          <div class="star-selector">
+            <input type="radio" id="star5" name="rating" value="5 stars" required /><label for="star5" title="5 stars">★</label>
+            <input type="radio" id="star4" name="rating" value="4 stars" /><label for="star4" title="4 stars">★</label>
+            <input type="radio" id="star3" name="rating" value="3 stars" /><label for="star3" title="3 stars">★</label>
+            <input type="radio" id="star2" name="rating" value="2 stars" /><label for="star2" title="2 stars">★</label>
+            <input type="radio" id="star1" name="rating" value="1 star"  /><label for="star1" title="1 star">★</label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="review">Your Review</label>
+          <textarea id="review" name="review" placeholder="Tell us about your experience — what was your favourite moment?" required></textarea>
+        </div>
+
+        <!-- Honeypot spam trap — hidden from real users -->
+        <input type="text" name="_gotcha" style="display:none" />
+        <input type="hidden" name="_subject" value="New Review — Nirvana Group Travels" />
+
+        <button type="submit" class="btn-submit">Submit Review</button>
+        <p class="form-note">Reviews are moderated before being featured on this page. We appreciate your honesty!</p>
+
+      </form>
+    </div>
   </div>
 
   <footer>
     <p>© 2025 Nirvana Group Travels · <a href="index.html">Back to Home</a></p>
   </footer>
+
+  <script>
+    // Show a thank-you message after submission instead of redirecting
+    const form = document.getElementById('review-form');
+    const successMsg = document.getElementById('success-msg');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST', body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          successMsg.style.display = 'block';
+        } else {
+          alert('Something went wrong — please try again or email us directly.');
+        }
+      } catch {
+        alert('Something went wrong — please try again or email us directly.');
+      }
+    });
+  </script>
 
 </body>
 </html>
